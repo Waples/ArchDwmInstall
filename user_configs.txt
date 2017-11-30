@@ -1,0 +1,4 @@
+main_user="florian"
+your_dotfiles="https://github.com/Waples/mydots.git"
+
+# vim:ft=config
