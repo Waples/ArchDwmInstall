@@ -103,8 +103,16 @@ for gits in $git_list; do
   $git_cmd $gits
 done
 
-#     SETUP `mydots`-method
-
+#     SETUP `mydots`-method, as described by jaagr
+cd $loc_home
+git init --bare $loc_home/.mydots.git
+git remote add origin $your_dotfiles
+git config status.showUntrackedFiles no
+git config alias.untracked "status -u"
+git config alias.untracked-at "status -u"
+git config alias.update "add --update"
+git config alias.commit "commit -m"
+echo "alias dots='git --git-dir=$HOME/.mydots.git/ --work-tree=$HOME'" >> $loc_home/.aliases
 
 #     CLEANUP & UPDATE
 rm -r $loc_tmp/*
