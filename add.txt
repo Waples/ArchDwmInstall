@@ -1,0 +1,7 @@
+https://www.linux.com/blog/how-full-encrypt-your-linux-system-lvm-luks
+
+
+
+cryptsetup luksFormat --hash=sha512 --key-size=512 --cipher=aes-xts-plain64 --verify-passphrase /dev/sda
+
+

@@ -18,7 +18,11 @@ My package installs will run through Pacaur, since it sources the pacman repo's 
 * [x] Source all *user specifics* from a file.
 
 #### How it works:
-1) Check if specified user exists. *(don't know if I will be changing this)*
+FIRST! Do not run this script as root; sudo with the user you want to create, or shit will get messy.
+
+Now then:
+1) Check if specified user exists. *(don't know if I will be changing this, bit redundant)*
+1.2) ~~> remove EVERYTHING from that user's home directory
 2) Update pacman packages.
 3) Install script dependencies *(base-devel,git,expac,yajl)*.
 4) Create my user directories.
