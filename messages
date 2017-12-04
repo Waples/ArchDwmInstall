@@ -1,0 +1,13 @@
+bird="echo -ne"
+msg_aur=" Installing access to the AUR (pacaur) ...\n"
+msg_aurupdate=" Updating from the AUR ...\n"
+msg_build=" Building suckless tools ...\n"
+msg_clean=" Cleaning up! ...\n"
+msg_depend=" Downloading dependencies ...\n"
+msg_dirs=" Creating user directories ...\n"
+msg_dotfiles=" Downloading dotfiles ...\n"
+msg_git=" Installing your git items ...\n"
+msg_mydots=" Setting up the 'jaagr dotfiles way' ...\n"
+msg_suck=" Installing the big suck! ...\n"
+msg_update=" Updating system ...\n"
+# vim:ft=config
