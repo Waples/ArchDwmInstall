@@ -22,17 +22,16 @@ loc_var="$loc/var"
 loc_tmp="$loc/tmp"
 loc_backup="$loc/backup"
 loc_suck="$loc/suckless"
-
 git_cmd="git clone"
 pkg_update="sudo pacman -Syu --noconfirm"
 pkg_cmd="sudo pacman -Sy --noconfirm --needed"
 aur_update="sudo pacaur -Syu --noconfirm"
-aur_cmd="sudo pacaur -Sy --noconfirm --needed"
-
+aur_cmd="sudo pacaur -Sy --noconfirm --noedit --needed"
+pip_update="pip install --upgrade pip"
+pip_cmd="pip install --user"
 git_list=$(cat github)                    # github scripts / tools :D
 sck_list=$(cat suckless)                  # suckless github pckgs
 pkg_list=$(cat packages)                  # Arch & Aur packages
-
 
 #     CHECKS
     ## check if running as sudo
@@ -46,7 +45,8 @@ case $whatlvl in
     echo -e " No sudo or root detected, continue! \n"
   ;;
 esac
-    ## check if user has been created.
+
+# check if user has been created.
 user_exist=$(id -u $main_user > /dev/null 2>&1; echo $?)
 if [ "$user_exist" == "0" ]; then
   echo -ne " User $main_user found on system.\nClearing out $loc_home.\nClearing home directory ...\n"
@@ -57,12 +57,14 @@ else
 fi
 
 
+
+
 #     DEPENDENCIES
 $bird $msg_update
 $pkg_update
 $bird $msg_depend
-$pkg_cmd base-devel
-$pkg_cmd git expac yajl
+$pkg_cmd base base-devel
+$pkg_cmd vim git expac yajl
 
 #     DIRECTORIES AND LOCALS
 $bird $msg_dirs
@@ -142,6 +144,6 @@ echo "alias dots='git --git-dir=$HOME/.mydots.git/ --work-tree=$HOME'" >> $loc_h
 rm -r $loc_tmp/*
 sudo pacman -Syu --noconfirm && sudo pacman -Sc --noconfirm
 clear; echo -e "\n\n\n  If you got this far, this shit actually worked!   \n\n\n   Restarting!\n\n ..."
-systemctl reboot
+#systemctl reboot
 
 # vim:ft=sh
