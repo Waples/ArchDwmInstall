@@ -25,13 +25,16 @@ loc_suck="$loc/suckless"
 git_cmd="git clone"
 pkg_update="sudo pacman -Syu --noconfirm"
 pkg_cmd="sudo pacman -Sy --noconfirm --needed"
-aur_update="sudo pacaur -Syu --noconfirm"
-aur_cmd="sudo pacaur -Sy --noconfirm --noedit --needed"
+
+#aur_update="sudo pacaur -Syu --noconfirm"
+#aur_cmd="sudo pacaur -Sy --noconfirm --noedit --needed"
+
 pip_update="pip install --upgrade pip"
-pip_cmd="pip install --user"
+pip_cmd="pip install"
+
 git_list=$(cat github)                    # github scripts / tools :D
 sck_list=$(cat suckless)                  # suckless github pckgs
-pkg_list=$(cat packages)                  # Arch & Aur packages
+pkg_list=$(cat packages)                  # Arch (---& Aur---) packages
 
 #     CHECKS
     ## check if running as sudo
@@ -46,50 +49,38 @@ case $whatlvl in
   ;;
 esac
 
-# check if user has been created.
-user_exist=$(id -u $main_user > /dev/null 2>&1; echo $?)
-if [ "$user_exist" == "0" ]; then
-  echo -ne " User $main_user found on system.\nClearing out $loc_home.\nClearing home directory ...\n"
-  rm -r $loc_home/*
-else
-  echo -ne " User $main_user doesn't exist yet.\nCreate user with UID 1000\nExiting ...\n"
-  exit
-fi
-
-
-
-
 #     DEPENDENCIES
 $bird $msg_update
 $pkg_update
 $bird $msg_depend
 $pkg_cmd base base-devel
-$pkg_cmd vim git expac yajl
+$pkg_cmd vim git 
+  #expac yajl
 
 #     DIRECTORIES AND LOCALS
 $bird $msg_dirs
-mkdir -p $loc_home/.local/{tmp,share,var,backup,bin,suckless}
-mkdir -p $loc_home/{builds,documents,downloads,ebooks,games,github,media,projects,stackstorage,torrents,vms}
+mkdir -p $loc_home/.local/{backup,bin,lib,scripts,share,suckless,tmp,trash,var}
+mkdir -p $loc_home/{builds,documents,downloads,ebooks,github,ogd,media,projects,stackstorage,torrents,vms}
 
 #     PACAUR INSTALL
-$bird $msg_aur
-cd $loc_tmp
-mkdir pacaur_install
-if [ ! -n "$(pacman -Qs cower)" ]; then
-  curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower
-  makepkg PKGBUILD --skippgpcheck --install --needed
-fi
-if [ ! -n "$(pacman -Qs pacaur)" ]; then
-  curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur
-  makepkg PKGBUILD --install --needed
-fi
+#$bird $msg_aur
+#cd $loc_tmp
+#mkdir pacaur_install
+#if [ ! -n "$(pacman -Qs cower)" ]; then
+#  curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower
+#  makepkg PKGBUILD --skippgpcheck --install --needed
+#fi
+#if [ ! -n "$(pacman -Qs pacaur)" ]; then
+#  curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur
+#  makepkg PKGBUILD --install --needed
+#fi
 
-#     PKG INSTALL (with PACAUR)
-$bird $msg_aurupdate
+#     PKG INSTALL (without PACAUR)
+$bird $msg_update
 cd $loc_home
-$aur_update
+$pkg_update
 for pkg in $pkg_list; do
-  $aur_cmd $pkg
+  $pkg_cmd $pkg
 done
 
 #     DOTFILES DOWNLOAD
